@@ -13,4 +13,5 @@ urlpatterns = [
 	path('details/<int:pk>', views.TaskDetailsView.as_view(), name='details'),
 	path('edit/<int:pk>', views.TaskEditView.as_view(), name='edit'),
 	path('export/', views.TaskExportView.as_view(), name='export'),
+	path('lavash/', views.UncompletedTaskListView.as_view(), name='uncompleted')
 	]
