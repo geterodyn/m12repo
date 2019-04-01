@@ -6,17 +6,24 @@
 {% block main_content %}
 	<h1>Невыполненные задачи</h1>
 	<ul id="todo-list">
-		<li>
 		{% for task in tasks %}
-			{% if task.priority == task.PRIORITY_HIGH %}
-			<span class="badge badge-pill badge-danger">&nbsp;</span>
-			{% elif task.priority == task.PRIORITY_MEDIUM %}
-			<span class="badge badge-pill badge-secondary">&nbsp;</span>
-			{% elif task.priority == task.PRIORITY_LOW %}
-			<span class="badge badge-pill badge-success">&nbsp;</span>
+			{% if task.is_completed %}
+			<li class="completed">
+				<input class="checkbox" data-uid={{ task.id }} type="checkbox" disabled="disabled" checked="checked" />
+			{% else %}
+			<li>
+				<input class="checkbox" data-uid={{ task.id }} type="checkbox" />
 			{% endif %}
-			<a href="{% url 'tasks:details' task.id %}">{{ task }}</a>
-			<hr/>
+				{% if task.priority == task.PRIORITY_HIGH %}
+				<span class="badge badge-pill badge-danger">&nbsp;</span>
+				{% elif task.priority == task.PRIORITY_MEDIUM %}
+				<span class="badge badge-pill badge-secondary">&nbsp;</span>
+				{% elif task.priority == task.PRIORITY_LOW %}
+				<span class="badge badge-pill badge-success">&nbsp;</span>
+				{% endif %}
+				<a href="{% url 'tasks:details' task.id %}">{{ task }}</a>
+				<a class="remove" href={% url "tasks:delete" task.id %}>X</a>
+				<hr/>
 			</li>
 		{% endfor %}
 	</ul>
