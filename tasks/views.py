@@ -74,6 +74,15 @@ class TaskListView(LoginRequiredMixin,ListView):
 		'''
 		return u.tasks.all()
 
+class UncompletedTaskListView(LoginRequiredMixin, ListView):
+	model = TodoItem
+	context_object_name = 'tasks'
+	template_name = 'tasks/uncompleted_tasks.html'
+
+	def get_queryset(set):
+		u = self.request.user
+		return TodoItem.objects.filter(owner=u).filter(is_completed=False)
+
 class TaskCreateView(View):
 	def my_render(self, request, form):
 		return render(request, 'tasks/create.html', {'form': form})
