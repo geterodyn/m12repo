@@ -79,7 +79,7 @@ class UncompletedTaskListView(LoginRequiredMixin, ListView):
 	context_object_name = 'tasks'
 	template_name = 'tasks/uncompleted_tasks.html'
 
-	def get_queryset(set):
+	def get_queryset(self):
 		u = self.request.user
 		return TodoItem.objects.filter(owner=u).filter(is_completed=False)
 
