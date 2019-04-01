@@ -31,7 +31,7 @@ def complete_task(request, uid):
 	t.is_completed = True
 	t.save()
 	messages.success(request, 'Задача выполнена')
-	return HttpResponse('OK')
+	return redirect(reverse('tasks:list'))
 
 # def add_task(request):
 # 	if request.method == 'POST':
