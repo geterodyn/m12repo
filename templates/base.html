@@ -32,7 +32,7 @@
 					{% if user.is_authenticated %}
 						<p>{{ user.first_name }}</p>
 						<ul>
-							<li><a href="#">Профиль</a></li>
+							<li><a href="{% url 'edit' %}">Профиль</a></li>
 							<li><a href="{% url 'tasks:create' %}">Добавить задачу</a></li>
 							<li><a href="{% url 'logout' %}">Выйти</a></li>
 						</ul>

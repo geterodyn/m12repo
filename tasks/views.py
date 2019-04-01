@@ -30,14 +30,16 @@ def complete_task(request, uid):
 	t = TodoItem.objects.get(id=uid)
 	t.is_completed = True
 	t.save()
+	messages.success(request, 'Задача выполнена')
 	return HttpResponse('OK')
 
-def add_task(request):
-	if request.method == 'POST':
-		desc = request.POST['description']
-		t = TodoItem(description=desc)
-		t.save()
-	return reverse('tasks:list')
+# def add_task(request):
+# 	if request.method == 'POST':
+# 		desc = request.POST['description']
+# 		t = TodoItem(description=desc)
+# 		t.save()
+
+# 	return reverse('tasks:list')
 
 def delete_task(request, uid):
 	t = TodoItem.objects.get(id=uid)
@@ -82,6 +84,7 @@ class TaskCreateView(View):
 			new_task = form.save(commit=False)
 			new_task.owner = request.user
 			new_task.save()
+			messages.success(request, 'Задача добавлена')
 			return redirect(reverse('tasks:list'))
 			
 		return self.my_render(request, form)
@@ -98,6 +101,7 @@ class TaskEditView(LoginRequiredMixin, View):
 			new_task = form.save(commit=False)
 			new_task.owner = request.user
 			new_task.save()
+			messages.success(request, 'Задача изменена')
 			return redirect(reverse('tasks:list'))
 		return render(request, 'tasks/edit.html', {'form':form, 'task':t })
 	def get(self, request, pk, *args, **kwargs):
