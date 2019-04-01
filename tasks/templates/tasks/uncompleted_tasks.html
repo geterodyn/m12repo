@@ -3,6 +3,10 @@
 
 {% block title %}Невыполненные задачи{% endblock title %}
 
+{% block extra_head %}
+	<script src="{% static 'js/script.js' %}"></script>
+{% endblock %}
+
 {% block main_content %}
 	<h1>Невыполненные задачи</h1>
 	<ul id="todo-list">
