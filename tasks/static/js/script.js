@@ -5,6 +5,7 @@ $(document).ready(function () {
 
 		uid = $(this).attr('data-uid');
 		$.get("/tasks/complete/" + uid);
+		location.reload();
 	});
 
 	$(document).on('click', '.remove', function(){
