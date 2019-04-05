@@ -57,6 +57,15 @@ def delete_task(request, uid):
 # 		form = TodoItemForm()
 # 	return render(request, 'tasks/create.html', {'form': form})
 
+def SortedTaskListView(request):
+	u = request.user
+	template = 'tasks/sorted_tasks.html'
+	tasks = TodoItem.objects.filter(owner=u)
+	high = tasks.filter(priority=1)
+	med = tasks.filter(priority=2)
+	low = tasks.filter(priority=3)
+	return render(request, template, {'high': high, 'med': med, 'low': low})
+
 class TaskListView(LoginRequiredMixin,ListView):
 	model = TodoItem
 	context_object_name = 'tasks'
