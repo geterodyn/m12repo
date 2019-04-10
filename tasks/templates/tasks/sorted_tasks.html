@@ -23,7 +23,7 @@
 	{% endif %}	
 		<hr/>
 		
-		<p>Средний приоритет<span class="badge badge-pill badge-warning">medium</span></p>
+		<p>Средний приоритет <span class="badge badge-pill badge-warning">medium</span></p>
 	{% if med %}
 		{% for m in med %}
 			<li><i class="fas fa-bolt"></i>&nbsp;<a href="{% url 'tasks:details' m.id %}">{{ m }}</a>
@@ -36,7 +36,7 @@
 
 		<hr/>
 	{% if low%}
-		<p>Низкий приоритет<span class="badge badge-pill badge-success">low</span></p>
+		<p>Низкий приоритет <span class="badge badge-pill badge-success">low</span></p>
 		
 		{% for low in low %}
 			<li><i class="fas fa-bolt"></i>&nbsp;<a href="{% url 'tasks:details' low.id %}">{{ low }}</a>
