@@ -79,3 +79,7 @@ h1 {
 .night {
 	background: url(../img/night.jpg);
 }
+
+.side_bar {
+	background: transparent;
+}

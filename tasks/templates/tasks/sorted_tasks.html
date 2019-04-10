@@ -35,9 +35,9 @@
 	{% endif %}
 
 		<hr/>
-	{% if low%}
+	
 		<p>Низкий приоритет <span class="badge badge-pill badge-success">low</span></p>
-		
+	{% if low%}
 		{% for low in low %}
 			<li><i class="fas fa-bolt"></i>&nbsp;<a href="{% url 'tasks:details' low.id %}">{{ low }}</a>
 			<a class="remove" href={% url "tasks:delete" low.id %}>X</a>
