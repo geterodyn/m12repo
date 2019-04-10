@@ -23,7 +23,7 @@
 	{% block extra_head %}
 	{% endblock %}
 </head>
-<body>
+<body class="{{ time_of_day }}">
 	<div class="container">
 		<div class="row">
 			
@@ -35,8 +35,9 @@
 							<li><a href="{% url 'edit' %}">Профиль</a></li>
 							<li><a href="{% url 'tasks:list' %}">Список задач</a></li>							
 							<li><a href="{% url 'tasks:create' %}">Добавить задачу</a></li>
-							<li><a href="{% url 'tasks:uncompleted' %}">Показать незавершенные задачи</a></li>
+							<li><a href="{% url 'tasks:uncompleted' %}">Незавершенные задачи</a></li>
 							<li><a href="{% url 'tasks:sorted' %}">Задачи по приоритету</a></li>
+							<li><a href="{% url 'tasks:time' %}">Время суток</a></li>
 							<li><a href="{% url 'logout' %}">Выйти</a></li>
 						</ul>
 					{% endif %}

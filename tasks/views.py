@@ -11,6 +11,8 @@ from django.db.models import Q
 from django.core.mail import send_mail
 from django.conf import settings
 
+from datetime import datetime as dt, timezone
+
 from tasks.models import TodoItem
 from tasks.forms import AddTaskForm, TodoItemForm, TodoItemExportForm
 
@@ -30,7 +32,6 @@ def complete_task(request, uid):
 	t = TodoItem.objects.get(id=uid)
 	t.is_completed = True
 	t.save()
-	messages.success(request, 'Задача выполнена')
 	return HttpResponse('OK')
 
 # def add_task(request):
@@ -142,12 +143,45 @@ class TaskExportView(LoginRequiredMixin, View):
 			q = q | Q(priority=TodoItem.PRIORITY_LOW)
 		tasks = TodoItem.objects.filter(owner=user).filter(q).all()
 
+		high_pri, med_pri, low_pri = [],[],[]
+		
 		body = 'Ваши задачи и приоритеты:\n'
-		for t in list(tasks):
-			if t.is_completed:
-				body += f"[x] {t.description} ({t.get_priority_display()})\n"
-			else:
-				body += f"[ ] {t.description} ({t.get_priority_display()})\n"
+		if priorities['prio_sorted']:
+			body += '(Разбито по приоритетам):\n'
+			for t in list(tasks):
+				if t.priority == 1:
+					high_pri.append(t)
+				elif t.priority == 2:
+					med_pri.append(t)
+				else:
+					low_pri.append(t)
+			body += '\nВысокий приоритет\n'
+			for t in high_pri:
+				if t.is_completed:
+					body += f"[x] {t.description} \n"
+				else:
+					body += f"[ ] {t.description} \n"
+			body += '__________________________________________________________'
+			body += '\nСредний приоритет\n'
+			for t in med_pri:
+				if t.is_completed:
+					body += f"[x] {t.description} \n"
+				else:
+					body += f"[ ] {t.description} \n"
+			body += '__________________________________________________________'
+			body += '\nНизкий приоритет\n'
+			for t in low_pri:
+				if t.is_completed:
+					body += f"[x] {t.description} \n"
+				else:
+					body += f"[ ] {t.description} \n"
+			
+		else:
+			for t in list(tasks):
+				if t.is_completed:
+					body += f"[x] {t.description} ({t.get_priority_display()})\n"
+				else:
+					body += f"[ ] {t.description} ({t.get_priority_display()})\n"
 		return body
 
 	def post(self, request, *args, **kwargs):
@@ -166,3 +200,29 @@ class TaskExportView(LoginRequiredMixin, View):
 	def get(self, request, *args, **kwargs):
 		form = TodoItemExportForm()
 		return render(request, 'tasks/export.html', {'form': form})
+
+class TimeOfDay(LoginRequiredMixin, ListView):
+	model = TodoItem
+	context_object_name = 'tasks'
+	template_name = 'tasks/time_of_day.html'
+
+	def get_context_data(self, **kwargs):
+		# string = 'day'
+		now = dt.now(timezone.utc)
+		if now.hour in range(6):
+			time_of_day = 'night'
+			time_of_day_ru = 'ночь'
+		elif now.hour in range(6,12):
+			time_of_day = 'morning'
+			time_of_day_ru = 'утро'
+		elif now.hour in range(12,18):
+			time_of_day = 'day'
+			time_of_day_ru = 'день'
+		elif now.hour in range(18,24):
+			time_of_day = 'evening'
+			time_of_day_ru = 'вечер'
+
+		context = super().get_context_data(**kwargs)
+		context['time_of_day'] = time_of_day
+		context['time_of_day_ru'] = time_of_day_ru
+		return context

@@ -21,4 +21,6 @@ class TodoItemExportForm(forms.Form):
 	prio_low = forms.BooleanField(
 		label='низкой важности', initial=False, required=False
 		)
-	
+	prio_sorted = forms.BooleanField(
+		label='Разбить по приоритетам', initial=False, required=False
+		)

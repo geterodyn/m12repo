@@ -27,6 +27,7 @@
 				<span class="badge badge-pill badge-success">&nbsp;</span>
 				{% endif %}
 				<a href="{% url 'tasks:details' task.id %}">{{ task }}</a>
+				<i>Was created {{ task.created|timesince }} ago</i>
 				<a class="remove" href={% url "tasks:delete" task.id %}>X</a>
 				<hr/>
 			</li>

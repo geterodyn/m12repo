@@ -63,3 +63,19 @@ input[type='checkbox'] {width: 30px;}
 h1 {
 	text-align: center;
 }
+
+.morning {
+	background: url(../img/morning.jpg);
+}
+
+.day {
+	background: url(../img/day.jpg);
+}
+
+.evening {
+	background: url(../img/evening.jpg);
+}
+
+.night {
+	background: url(../img/night.jpg);
+}

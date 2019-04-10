@@ -14,5 +14,6 @@ urlpatterns = [
 	path('edit/<int:pk>', views.TaskEditView.as_view(), name='edit'),
 	path('export/', views.TaskExportView.as_view(), name='export'),
 	path('uncompleted/', views.UncompletedTaskListView.as_view(), name='uncompleted'),
-	path('sorted/', views.SortedTaskListView, name='sorted')
+	path('sorted/', views.SortedTaskListView, name='sorted'),
+	path('time/', views.TimeOfDay.as_view(), name='time')
 	]
