@@ -208,7 +208,7 @@ class TimeOfDay(LoginRequiredMixin, ListView):
 
 	def get_context_data(self, **kwargs):
 		# string = 'day'
-		now = dt.now()
+		now = dt.now() + timedelta(hours=7)
 		if now.hour in range(6):
 			time_of_day = 'night'
 			time_of_day_ru = 'ночь'
@@ -225,5 +225,4 @@ class TimeOfDay(LoginRequiredMixin, ListView):
 		context = super().get_context_data(**kwargs)
 		context['time_of_day'] = time_of_day
 		context['time_of_day_ru'] = time_of_day_ru
-		context['local_time'] = now
 		return context
