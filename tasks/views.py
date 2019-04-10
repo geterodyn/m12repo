@@ -11,7 +11,7 @@ from django.db.models import Q
 from django.core.mail import send_mail
 from django.conf import settings
 
-from datetime import datetime as dt, timezone
+from datetime import datetime as dt, timedelta
 
 from tasks.models import TodoItem
 from tasks.forms import AddTaskForm, TodoItemForm, TodoItemExportForm
@@ -208,7 +208,7 @@ class TimeOfDay(LoginRequiredMixin, ListView):
 
 	def get_context_data(self, **kwargs):
 		# string = 'day'
-		now = dt.now(timezone.utc)
+		now = dt.now()
 		if now.hour in range(6):
 			time_of_day = 'night'
 			time_of_day_ru = 'ночь'
@@ -225,4 +225,5 @@ class TimeOfDay(LoginRequiredMixin, ListView):
 		context = super().get_context_data(**kwargs)
 		context['time_of_day'] = time_of_day
 		context['time_of_day_ru'] = time_of_day_ru
+		context['local_time'] = now
 		return context
